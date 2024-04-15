@@ -1,0 +1,22 @@
+@import url("https://fonts.googleapis.com/css?family=Nunito:400,700");
+@import url("https://fonts.googleapis.com/css2?family=Vollkorn:wght@400;600;700;900&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    @font-face {
+        font-family: 'CooperSTD';
+        src: url('../assets/fonts/cooper-std-black.otf') format('opentype');
+    }
+    html {
+        font-family: "Nunito", system-ui, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        overflow-x:hidden;
+        overscroll-behavior: none;
+        padding: 0;
+        margin : 0;
+    }
+    
+}
