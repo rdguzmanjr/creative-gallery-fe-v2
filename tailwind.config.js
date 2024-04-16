@@ -5,6 +5,7 @@ export default {
     "./src/**/*.{vue,js,ts,jsx,tsx}",
   ],
   theme: {
+   
     screens: {
 
       'sm': '640px',
@@ -38,14 +39,9 @@ export default {
           '0%, 100%': { transform: 'translateY(-1rem)' },
           '50%': { transform: 'translateY(0px)' },
         },
-        cardIntro: {
-          '0%': { transform: 'translateY(500px)' },
-          '100%': { transform: 'translateY(0px)' },
-        },
       },
       animation: {
         updown: 'updown 1.5s linear infinite',
-        cardIntro: 'cardIntro 0.6s ease-out 0s both',
       },
     },
   },

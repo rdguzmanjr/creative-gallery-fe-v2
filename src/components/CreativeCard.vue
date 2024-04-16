@@ -23,7 +23,7 @@ let props=defineProps({creative:Object})
 
 <template>
     <div id="card-perspective" @mouseover="handlemouserover" @mouseout="handlemouserout" class="perspective-[2000px] cursor-pointer" @click="handleclick">
-        <div id="card" class="transition-all ease-out duration-[1000ms] backdrop:relative w-[300px] bg-brandgray h-[570px] text-white rounded-2xl transform-style-3d" :class="flip?'rotate-y-180':'rotate-y-0'">
+        <div id="card" class="transition-all ease-out duration-[1000ms] w-[300px] bg-brandgray h-[570px] text-white rounded-2xl transform-style-3d" :class="flip?'rotate-y-180':'rotate-y-0'">
            
             <!-- card-front  -->
 

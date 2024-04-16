@@ -8,7 +8,7 @@ const props=defineProps({creative:Object})
 
 <template>
   <div id="creativeinfo" class="hidden h-screen space-y-12  md:flex flex-col justify-center bg-brandgrayblue text-white pb-20
-  min-w-[15.5rem] 2xl:min-w-[20rem]
+  max-w-[15.5rem] 2xl:max-w-[20rem]
   2xl:space-y-20 z-[0]
   ">
     <div class="space-y-4">

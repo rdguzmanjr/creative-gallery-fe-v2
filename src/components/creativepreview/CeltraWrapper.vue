@@ -9,7 +9,9 @@ const props=defineProps({srcurl:String,format:String})
 </script>
 
 <template>
+    
     <div v-if="adview=='phone' " id="celtra-wrapper" class="bg-brandgrayblue relative w-9/12 md:scale-[0.6] lg:scale-[0.65]  2xl:scale-[0.9]">
+        <!-- <p class="text-white">TEST {{ isint }}</p> -->
         <div id="phone-wrapper" class="md:w-[20%] md:h-auto aspect-[340/677] block 
             md:absolute md:-translate-y-2/4 md:top-[50%] md:-translate-x-2/4 md:left-[30%] lg:left-[50%] 2xl:left-[60%]">
             <iframe 
@@ -22,6 +24,7 @@ const props=defineProps({srcurl:String,format:String})
                  <img width=520 src="/src/assets/images/phone.png"/>
             </div>
         </div>
+        
     </div>
 
     <div v-else-if="adview=='desktop' " id="desktop-view" class="bg-brandgrayblue relative w-9/12">
@@ -47,10 +50,11 @@ const props=defineProps({srcurl:String,format:String})
      </iframe>
 
 </div>
-    <div v-if="format=='Banner' " id="nav-container" class="hidden absolute top-10 left-5
+    
+    <div v-if="format=='Banner'" id="nav-container" class="hidden absolute top-10 left-5
      lg:flex flex-col justify-center space-y-3 text-white">
         <div id="phonebutton" class="rounded-lg ring-0 ring-brandgreenlight active:ring-2  hover:bg-brandgreendark cursor-pointer" @click="adview='phone'">
-            <img width=40 src="/src/assets/images/Mobile.svg"/>
+           <img width=40 src="/src/assets/images/Mobile.svg"/>
         </div>
         <div id="desktopbutton" class="rounded-lg ring-0 ring-brandgreenlight active:ring-2  hover:bg-brandgreendark cursor-pointer" @click="adview='desktop'">
             <img width=40 src="/src/assets/images/Laptop.svg"/>

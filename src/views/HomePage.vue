@@ -1,5 +1,6 @@
 
 <script setup>
+
 import { useCreativeStore,useFilterStore } from '@/stores/creative'
 import { ref } from 'vue'
 import HeroSection from '../components/HeroSection.vue';
@@ -49,7 +50,7 @@ const onEnter=(el,done)=>{
 setTimeout(()=>{
    console.log('preload to false')
    showpreload.value=false;
-},3000)
+},2000)
 
 </script>
 
@@ -57,7 +58,6 @@ setTimeout(()=>{
    <PreloadImage v-if="showpreload"/>
    <div id="wrapper" class="space-y-16" >
        <HeroSection/>
-    
        <FilterComponent 
          :categories="filterStore.categories"
          :advertisers="filterStore.advertisers"

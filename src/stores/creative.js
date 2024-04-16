@@ -83,7 +83,9 @@ export const useSingleCreativeStore= defineStore('singlecreative', () => {
   const spec = ref(null)
   const srctype = ref(null)
   const srcurl = ref(null)
-
+  const isint = ref(null)
+  const width = ref(null)
+  const height = ref(null)
   async function getCreativeById(id) {
     try {
       const response = await axios.get("https://creative.nativetouch.io/api/creatives/"+id);
@@ -95,13 +97,28 @@ export const useSingleCreativeStore= defineStore('singlecreative', () => {
       spec.value=response.data.specs.path;
       srctype.value=response.data.typeObj.type;
       srcurl.value=response.data.typeObj.path;
+      isint.value=response.data.format.size.banner.responsive;
+      width.value=response.data.format.size.banner.width;
+      height.value=response.data.format.size.banner.height;
       console.log('getting singe creative... '+id);
     } catch (error) {
       console.error(error);
     }
   }
-
-  return { name,srctype,srcurl,ids ,format, category,kpi,spec,getCreativeById}
+  function reset(){
+      name.value=null;
+      ids.value=null;
+      format.value=null;
+      category.value=null;
+      kpi.value=null;
+      spec.value=null;
+      srctype.value=null;
+      srcurl.value=null;
+      isint.value=null;
+      width.value=null;
+      height.value=null;
+  }
+  return { name,srctype,srcurl,ids ,format, category,kpi,spec,isint,width,height,getCreativeById,reset}
 });
 
 

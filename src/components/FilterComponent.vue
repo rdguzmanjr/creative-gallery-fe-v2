@@ -36,6 +36,7 @@ const generated_params=computed(()=>{
      let d = !selected_kpis.value.length?'0':selected_kpis.value.toString()
      return a+'/'+b+'/'+c+'/'+d;
 })
+
 const noneselected=computed(()=>{
      let a = !selected_categories.value.length;
      let b = !selected_advertisers.value.length;
