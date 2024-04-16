@@ -17,6 +17,8 @@ export default {
 
       '2xl': '1536px',
 
+      '3xl': '1736px',
+
     },
     fontFamily: {
       'cooper': ['CooperSTD'],

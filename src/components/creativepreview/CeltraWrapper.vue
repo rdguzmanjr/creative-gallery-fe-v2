@@ -23,17 +23,30 @@ const props=defineProps({srcurl:String,format:String})
             </div>
         </div>
     </div>
-    <div v-else-if="adview=='desktop' " id="desktop-view" class="bg-brandgrayblue relative w-9/12 md:scale-[1]">
-        <div id="phone-wrapper" class="lg:absolute lg:w-[76.5%] lg:h-auto aspect-[1024/768] block 
-            lg:-translate-y-2/4 lg:top-[46%] lg:-translate-x-2/4 md:left-[50%] 2xl:w-[69%] 2xl:top-[48%]">   
+
+    <div v-else-if="adview=='desktop' " id="desktop-view" class="bg-brandgrayblue relative w-9/12">
             <iframe 
-                class="w-screen h-screen lg:w-[800px] lg:h-[600px] 2xl:w-[1024px] 2xl:h-[768px] pointer-events-auto"
+                class="absolute w-[1280px] h-[760px] pointer-events-auto -translate-x-2/4 left-[52%]
+                -translate-y-2/4 top-[45%]
+                scale-[0.45] xl:scale-[0.64] 2xl:scale-[0.8] 3xl:scale-[0.9]"
                 id="nt_iframe"
                 :src="`https://preview-sandbox.celtra.com/preview/${srcurl}/frame?overrides.deviceInfo.deviceType=Phone&amp;rp.standalonePreview=1`"
                 sandbox="allow-scripts allow-popups allow-same-origin">
             </iframe>
-        </div>
+       
     </div>
+    <div v-else-if="adview=='tablet' " id="tablet-view" class="bg-brandgrayblue relative w-9/12">
+     
+     <iframe 
+         class="absolute w-[768px] h-[1024px] pointer-events-auto -translate-x-2/4 left-[52%]
+         -translate-y-2/4 top-[46%]
+         scale-[0.5] xl:scale-[0.6] 2xl:scale-[0.65] 3xl:scale-[0.7]"
+         id="nt_iframe"
+         :src="`https://preview-sandbox.celtra.com/preview/${srcurl}/frame?overrides.deviceInfo.deviceType=Phone&amp;rp.standalonePreview=1`"
+         sandbox="allow-scripts allow-popups allow-same-origin">
+     </iframe>
+
+</div>
     <div v-if="format=='Banner' " id="nav-container" class="hidden absolute top-10 left-5
      lg:flex flex-col justify-center space-y-3 text-white">
         <div id="phonebutton" class="rounded-lg ring-0 ring-brandgreenlight active:ring-2  hover:bg-brandgreendark cursor-pointer" @click="adview='phone'">
@@ -42,7 +55,7 @@ const props=defineProps({srcurl:String,format:String})
         <div id="desktopbutton" class="rounded-lg ring-0 ring-brandgreenlight active:ring-2  hover:bg-brandgreendark cursor-pointer" @click="adview='desktop'">
             <img width=40 src="/src/assets/images/Laptop.svg"/>
         </div>
-        <div id="tabletbutton" class="rounded-lg ring-0 ring-brandgreenlight active:ring-2  hover:bg-brandgreendark cursor-pointer" @click="adview='desktop'">
+        <div id="tabletbutton" class="rounded-lg ring-0 ring-brandgreenlight active:ring-2  hover:bg-brandgreendark cursor-pointer" @click="adview='tablet'">
             <img width=40 src="/src/assets/images/Tablet.svg"/>
         </div>
     </div>

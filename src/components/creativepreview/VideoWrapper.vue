@@ -38,7 +38,7 @@ const ctvfullscreen=()=>{
             <p v-if="showmute" class="hidden md:block text-black bg-white bg-opacity-50 rounded-sm px-2 py-1 text-sm
             hover:bg-opacity-80 active:bg-opacity-100 absolute cursor-pointer shadow-2xl
             top-[15px] left-[20px] drop-shadow-[10px_10px_10px_rgba(0,0,0,0.5)]
-            " @click="ctv.muted=false;showmute=false">Click for Sound</p>
+            " @click="ctv.muted=false;showmute=false;ctv.play()">Click for Sound</p>
             <p class="hidden md:block absolute text-white font-bold text-xl -bottom-[120px] -translate-x-2/4 md:left-1/2">CTV Preview</p>
             <p class="hidden md:block absolute text-white font-bold 
             text-md -bottom-[160px] -translate-x-2/4 md:left-1/2 cursor-pointer
