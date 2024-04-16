@@ -11,7 +11,7 @@ const props=defineProps({srcurl:String,format:String})
 
 <template>
 
-    <div v-if="adview=='phone' " id="url-wrapper" class="bg-brandgrayblue relative w-9/12 md:scale-[0.6] lg:scale-[0.65]  2xl:scale-[0.9]">
+    <div v-if="adview=='phone' " id="url-wrapper" class="bg-brandgrayblue relative w-9/12 md:scale-[0.7] lg:scale-[0.8]  2xl:scale-[0.9]">
         <div id="phone-wrapper" class="md:w-[20%] md:h-auto aspect-[340/677] block 
             md:absolute md:-translate-y-2/4 md:top-[50%] md:-translate-x-2/4 md:left-[30%] lg:left-[50%] 2xl:left-[60%]">
             <HTMLWrapper 
