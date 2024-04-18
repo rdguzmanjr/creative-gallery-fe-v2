@@ -34,7 +34,7 @@ const props=defineProps({srchtml:String,format:String})
             </div>
         </HTMLWrapperLayout>
     </div>
-    <div v-else-if="format=='Standard Interstitial'">
+    <div v-else-if="creativeStore.width==0 && creativeStore.height==0 ">
         <iframe 
                 class="w-full h-full"
                 :src="srchtml"
@@ -43,8 +43,8 @@ const props=defineProps({srchtml:String,format:String})
         <HTMLWrapperLayout v-else>
             <div id="ad-space" class="flex justify-center">
                 <iframe
-                    width=300
-                    height=250
+                    :width="creativeStore.width"
+                    :height="creativeStore.height"
                     :src="srchtml"
                 ></iframe>
             </div>
