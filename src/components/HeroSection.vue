@@ -1,5 +1,5 @@
 <template>
-    <div id="hero" class="bg-brandgray w-5/5 z-20 min-h-screen max-h-screen sticky bg-no-repeat bg-[url('../assets/images/hero.jpg')] bg-[52%_0%] bg-[length:auto_120%] 
+    <div id="hero" class="bg-brandgray w-5/5 z-20 min-h-dvh sticky bg-no-repeat bg-[url('../assets/images/hero.jpg')] bg-[52%_0%] bg-[length:auto_120%] 
         md:bg-[length:auto_100%] md:bg-[50%_120%]
         lg:bg-[length:auto_150%] lg:bg-[50%_0%]
         2xl:bg-[length:auto_140%] 2xl:bg-[50%_50%]

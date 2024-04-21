@@ -28,27 +28,34 @@ const props=defineProps({srcurl:String,format:String})
     </div>
 
     <div v-else-if="adview=='desktop' " id="desktop-view" class="bg-brandgrayblue relative w-9/12">
-            <iframe 
-                class="absolute w-[1280px] h-[760px] pointer-events-auto -translate-x-2/4 left-[52%]
-                -translate-y-2/4 top-[45%]
-                scale-[0.45] xl:scale-[0.64] 2xl:scale-[0.8] 3xl:scale-[0.9]"
+        <div id="desktop-wrapper" class="absolute -translate-x-2/4 left-[52%]
+                -translate-y-2/4 top-[40%]
+                scale-[0.45] xl:scale-[0.64] 2xl:scale-[0.8] 3xl:scale-[0.8]">
+        <iframe 
+                class="pointer-events-auto w-[1280px] h-[760px]"
                 id="nt_iframe"
                 :src="`https://preview-sandbox.celtra.com/preview/${srcurl}/frame?overrides.deviceInfo.deviceType=Phone&amp;rp.standalonePreview=1`"
                 sandbox="allow-scripts allow-popups allow-same-origin">
             </iframe>
-       
+            <div class="hidden md:block absolute -top-[25px] -left-[35px] w-[1350px] pointer-events-none">
+                <img width=1350 src="/src/assets/images/desktop.png"/>
+            </div>
+        </div>   
     </div>
     <div v-else-if="adview=='tablet' " id="tablet-view" class="bg-brandgrayblue relative w-9/12">
-     
-     <iframe 
-         class="absolute w-[768px] h-[1024px] pointer-events-auto -translate-x-2/4 left-[52%]
+     <div id="tablet-wrapper" class="absolute -translate-x-2/4 left-[52%]
          -translate-y-2/4 top-[46%]
-         scale-[0.5] xl:scale-[0.6] 2xl:scale-[0.65] 3xl:scale-[0.7]"
+         scale-[0.5] xl:scale-[0.6] 2xl:scale-[0.65] 3xl:scale-[0.7]">
+     <iframe 
+         class="pointer-events-auto w-[768px] h-[1024px]"
          id="nt_iframe"
          :src="`https://preview-sandbox.celtra.com/preview/${srcurl}/frame?overrides.deviceInfo.deviceType=Phone&amp;rp.standalonePreview=1`"
          sandbox="allow-scripts allow-popups allow-same-origin">
      </iframe>
-
+      <div class="hidden md:block absolute -top-[30px] -left-[20px] w-[820px] pointer-events-none">
+                <img width=820 src="/src/assets/images/tablet.png"/>
+      </div>
+    </div>
 </div>
     
     <div v-if="format=='Banner'" id="nav-container" class="hidden absolute top-10 left-5
