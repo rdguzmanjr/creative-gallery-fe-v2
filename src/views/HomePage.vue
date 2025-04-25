@@ -9,7 +9,7 @@ import CardWrapper from '../components/CardWrapper.vue';
 import FilterComponent from '../components/FilterComponent.vue';
 import PreloadImage from '../components/PreloadImage.vue'
 
-let showpreload=ref(true);
+let showpreload=ref(false);
 import gsap from 'gsap'
 const creativewrapper=ref(null)
 

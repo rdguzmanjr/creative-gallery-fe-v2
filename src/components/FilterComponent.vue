@@ -71,7 +71,7 @@ const products=computed(()=>{
    const str=product_search.value.toLowerCase();
    return props.products.filter((obj)=>{
 
-    return obj.name.toLowerCase().includes(str)&&(obj.name.toLowerCase()!=='big box')  && (obj.name.toLowerCase()!=='vertical video')
+    return obj.name.toLowerCase().includes(str)&&(obj.name.toLowerCase()!=='big box')  && (obj.name.toLowerCase()!=='vertical video')&& (obj.name.toLowerCase()!=='interscroller')
     
     });
 })
