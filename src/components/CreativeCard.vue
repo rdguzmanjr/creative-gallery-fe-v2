@@ -23,12 +23,14 @@ let props=defineProps({creative:Object})
 
 <template>
     <div id="card-perspective" @mouseover="handlemouserover" @mouseout="handlemouserout" class="perspective-[2000px] cursor-pointer" @click="handleclick">
-        <div id="card" class="transition-all ease-out duration-[1000ms] w-[300px] bg-brandgray h-[570px] text-white rounded-2xl transform-style-3d" :class="flip?'rotate-y-180':'rotate-y-0'">
+        <div id="card" class="transition-all ease-out duration-[1000ms] w-[300px] bg-brandgray h-[570px] text-[#f5ffde] rounded-2xl transform-style-3d" :class="flip?'rotate-y-180':'rotate-y-0'">
            
             <!-- card-front  -->
 
             <div id="cardfront" class="absolute backface-hidden">
-                    <div class="rounded-2xl w-[300px] h-[285px] bg-brandgreen"></div>
+                    <div class="rounded-2xl w-[300px] h-[290px] bg-brandgreen"></div>
+                    <div class="absolute top-0 rounded-2xl w-[300px] h-[570px] bg-[url('../assets/images/cardcircle.png')] bg-no-repeat bg-[position:calc(100%-55px)_calc(100%-85px)] bg-[length:350px_auto]"></div>
+                    <div class="absolute top-0 rounded-2xl w-[300px] h-[570px] bg-[url('../assets/images/cardbg.png')] bg-no-repeat bg-[position:center_calc(100%-20px)] bg-[length:250px_auto]"></div>
                     <div class="absolute top-0 rounded-2xl w-[300px] h-[278px] bg-center bg-cover" :style="`background-image: url(${creative.thumbnail})`"></div>
                     <div class="info mx-5 my-3 space-y-20 mt-5">
                         <p class="absolute top-[19rem] font-volkorn font-black text-2xl">{{creative.name}}</p>
@@ -66,6 +68,6 @@ let props=defineProps({creative:Object})
 <style scoped>
 
 #card-perspective{
-    filter: drop-shadow(0px 0px 5px black);
+    filter: drop-shadow(0px 0px 5px #008176);
 }
 </style>

@@ -29,7 +29,7 @@ export default {
     extend: {
       colors: {
         'brandgreenlight': '#2cd994',
-        'brandgreen': '#00c784',
+        'brandgreen': '#008176',
         'brandgreendark': '#00b374',
         'brandgray': '#333841',
         'brandgrayblue':'#131415',
