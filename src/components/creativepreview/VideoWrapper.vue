@@ -1,6 +1,7 @@
 <script setup>
 import { ref, onMounted, watch } from 'vue'
-
+import digiboardImg from '@/assets/images/digiboard.png'
+import tvImg from '@/assets/images/tv.png'
 const ctv = ref(null)
 const showmute = ref(true)
 const isPortrait = ref(false)
@@ -65,7 +66,7 @@ watch(() => props.srcurl, () => {
       :class="isPortrait 
         ? 'md:-top-[4px] md:-left-[280px] md:w-[800px] lg:w-[800px] 2xl:w-[800px]' 
         : 'md:-top-[8.5px] md:-left-[5px] md:w-[410px] lg:w-[610px] 2xl:w-[730px]'">
-        <img width="800" :src="isPortrait ? '/src/assets/images/digiboard.png' : '/src/assets/images/tv.png'" />
+        <img width="800" :src="isPortrait ? digiboardImg : tvImg" />
       </div>
 
       <p v-if="showmute" class="hidden md:block text-black bg-white bg-opacity-50 rounded-sm px-2 py-1 text-sm
