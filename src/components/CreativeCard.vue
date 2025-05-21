@@ -34,15 +34,17 @@ let props=defineProps({creative:Object})
                     <div class="absolute top-0 rounded-2xl w-[300px] h-[278px] bg-center bg-cover" :style="`background-image: url(${creative.thumbnail})`"></div>
                     <div class="info mx-5 my-3 space-y-20 mt-5">
                         <p class="absolute top-[19rem] font-volkorn font-black text-2xl">{{creative.name}}</p>
-                        <div class="absolute top-[20rem] space-y-3">
-                            <p class="text-lg">Brand: {{creative.advertiser.name}}</p>
-                            <p class="text-lg">Product: {{creative.format.name}}</p>
-                            <p class="text-lg">Category:</p>
-                            <span class="text-xs bg-brandgreen rounded-md px-3 text-black">{{creative.categories[0].name}}</span>
+                        <div class="absolute top-[19rem] space-y-1">
+                            <p class="text-md">Brand: {{creative.advertiser.name}}</p>
+                            <p class="text-md">Product: {{creative.format.name}}</p>
+                            <p class="text-md">Category:</p>
+                            <span class="text-xs bg-[#252a30] rounded-md px-3 text-white">{{creative.categories[0].name}}</span>
                         </div>
-                        <div class="absolute right-[2rem] top-[26rem]"><fa-icon :icon="['fas', 'chevron-right']" class="text-white text-5xl"/></div>
-                        <div class="absolute right-[1.7rem] top-[26rem]"><fa-icon :icon="['fas', 'chevron-right']" class="text-brandgreen text-5xl"/></div>
+                        <!-- <div class="absolute right-[2rem] top-[26rem]"><fa-icon :icon="['fas', 'chevron-right']" class="text-white text-5xl"/></div>
+                        <div class="absolute right-[1.7rem] top-[26rem]"><fa-icon :icon="['fas', 'chevron-right']" class="text-brandgreen text-5xl"/></div> -->
                     </div>
+                    <div class="absolute top-[31.5rem] rounded-2xl w-[300px] h-[50px] bg-[url('../assets/images/cardcta.png')] bg-no-repeat bg-[position:calc(100%-25px)_calc(100%-10px)] bg-[length:250px_auto]"></div>
+
                 </div>
 
                 <!-- card-back -->
