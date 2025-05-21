@@ -40,8 +40,6 @@ let props=defineProps({creative:Object})
                             <p class="text-md">Category:</p>
                             <span class="text-xs bg-[#252a30] rounded-md px-3 text-white">{{creative.categories[0].name}}</span>
                         </div>
-                        <!-- <div class="absolute right-[2rem] top-[26rem]"><fa-icon :icon="['fas', 'chevron-right']" class="text-white text-5xl"/></div>
-                        <div class="absolute right-[1.7rem] top-[26rem]"><fa-icon :icon="['fas', 'chevron-right']" class="text-brandgreen text-5xl"/></div> -->
                     </div>
                     <div class="absolute top-[31.5rem] rounded-2xl w-[300px] h-[50px] bg-[url('../assets/images/cardcta.png')] bg-no-repeat bg-[position:calc(100%-25px)_calc(100%-10px)] bg-[length:250px_auto]"></div>
 
