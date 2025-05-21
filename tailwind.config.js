@@ -25,6 +25,7 @@ export default {
       'cooper': ['CooperSTD'],
       'volkorn': ['Vollkorn'],
       'nunito': ['Nunito'],
+       'nave': ['nave'],
     },
     extend: {
       colors: {
