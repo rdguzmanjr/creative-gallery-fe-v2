@@ -9,9 +9,17 @@ const props=defineProps({srcurl:String,format:String})
 </script>
 
 <template>
-    
-    <div v-if="adview=='phone' " id="celtra-wrapper" class="bg-brandgrayblue relative w-9/12 md:scale-[0.7] lg:scale-[0.8]  2xl:scale-[0.9]">
+     
+    <div v-if="adview=='phone' " id="celtra-wrapper" class="bg-[#373B43] relative w-9/12 md:scale-[0.7] lg:scale-[0.8]  2xl:scale-[0.9]">
         <!-- <p class="text-white">TEST {{ isint }}</p> -->
+        <div class="bg-no-repeat bg-[url('../assets/images/cardbg.png')] absolute top-0 
+        w-full h-full bg-[length:400px_auto] bg-[position:calc(100%-50px)_calc(100%+50px)]
+        md:w-[500px] md:h-[570px] md:bg-[length:500px_auto] 
+        lg:w-[900px] lg:h-[570px] lg:bg-[length:700px_auto] lg:bg-[position:calc(100%-150px)_calc(100%)]
+        xl:w-[1000px] xl:h-[600px] xl:bg-[length:800px_auto] xl:bg-[position:calc(100%-50px)_calc(100%+100px)]
+        2xl:w-[1500px] 2xl:h-[700px] 2xl:bg-[length:900px_auto] 2xl:bg-[position:calc(100%-200px)_calc(100%+50px)]
+
+        "></div>
         <div id="phone-wrapper" class="md:w-[20%] md:h-auto aspect-[340/677] block 
             md:absolute md:-translate-y-2/4 md:top-[50%] md:-translate-x-2/4 md:left-[30%] lg:left-[50%] 2xl:left-[60%]">
             <iframe 
@@ -27,7 +35,7 @@ const props=defineProps({srcurl:String,format:String})
         
     </div>
 
-    <div v-else-if="adview=='desktop' " id="desktop-view" class="bg-brandgrayblue relative w-9/12">
+    <div v-else-if="adview=='desktop' " id="desktop-view" class="bg-[#373B43] relative w-9/12">
         <div id="desktop-wrapper" class="absolute -translate-x-2/4 left-[52%]
                 -translate-y-2/4 top-[40%]
                 scale-[0.45] xl:scale-[0.64] 2xl:scale-[0.8] 3xl:scale-[0.8]">
@@ -42,7 +50,7 @@ const props=defineProps({srcurl:String,format:String})
             </div>
         </div>   
     </div>
-    <div v-else-if="adview=='tablet' " id="tablet-view" class="bg-brandgrayblue relative w-9/12">
+    <div v-else-if="adview=='tablet' " id="tablet-view" class="bg-[#373B43] relative w-9/12">
      <div id="tablet-wrapper" class="absolute -translate-x-2/4 left-[52%]
          -translate-y-2/4 top-[46%]
          scale-[0.5] xl:scale-[0.6] 2xl:scale-[0.65] 3xl:scale-[0.7]">

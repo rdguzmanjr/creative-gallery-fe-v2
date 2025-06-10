@@ -42,8 +42,15 @@ watch(() => props.srcurl, () => {
 </script>
 
 <template>
-  <div id="video-wrapper" class="bg-brandgrayblue relative w-12/12 md:w-9/12">
-  
+  <div id="video-wrapper" class="bg-[#373B43] relative w-12/12 md:w-9/12">
+    <div class="bg-no-repeat bg-[url('../assets/images/cardbg.png')] absolute top-0 
+        w-full h-full bg-[length:400px_auto] bg-[position:calc(100%-50px)_calc(100%+50px)]
+        md:w-[500px] md:h-[570px] md:bg-[length:500px_auto] 
+        lg:w-[900px] lg:h-[570px] lg:bg-[length:700px_auto] lg:bg-[position:calc(100%-150px)_calc(100%)]
+        xl:w-[1000px] xl:h-[600px] xl:bg-[length:800px_auto] xl:bg-[position:calc(100%-50px)_calc(100%+100px)]
+        2xl:w-[1500px] 2xl:h-[700px] 2xl:bg-[length:900px_auto] 2xl:bg-[position:calc(100%-200px)_calc(100%+50px)]
+
+        "></div>
     <div 
   id="tv-wrapper"
   :class="isPortrait 
