@@ -7,7 +7,7 @@ const props=defineProps({creative:Object})
 </script>
 
 <template>
-  <div id="creativeinfo" class="hidden h-screen space-y-14  md:flex flex-col justify-center bg-brandgrayblue text-white pb-20
+  <div id="creativeinfo" class="hidden h-screen space-y-14  md:flex flex-col justify-center bg-[#373B43] text-[#f5ffde] pb-20
   min-w-[20rem] 2xl:min-w-[25rem]
   2xl:space-y-20 z-[0]
   ">
@@ -17,10 +17,10 @@ const props=defineProps({creative:Object})
             <QRimage :creativeId="creative.ids"></QRimage>
         </div>
      </div>
-     <div class="space-y-3 font-volkorn text-lg 2xl:text-2xl">
-       <p :class="creative.name.length>23?'text-lg':'text-3xl'">{{ creative.name }}</p>
-       <p>{{ creative.format}}</p>
-       <p>Categories</p>
+     <div class="space-y-3  text-lg 2xl:text-2xl">
+       <p :class="creative.name.length>23?'text-lg font-black font-nave':'text-3xl font-black font-nave'">{{ creative.name }}</p>
+       <p class="text-md">{{ creative.format}}</p>
+       <p class="text-md">Categories</p>
        <p class="absolute font-nunito text-xs font-thin bg-gray-100 text-black rounded-sm px-2 py-[0.1rem]">{{creative.category}}</p>
      </div>
      <div>

@@ -21,7 +21,7 @@ onUnmounted(()=>{
 </script>
 
 <template>
-    <div id="info-wrapper" class="bg-brandgrayblue w-screen h-screen flex flex-row justify-between">
+    <div id="info-wrapper" class="bg-[#373B43] w-screen h-screen flex flex-row justify-between">
             <PreviewWindow :creative="creativeStore"></PreviewWindow>
             <CreativeInfo :creative="creativeStore" v-if="creativeStore.srctype"></CreativeInfo>
     </div>
