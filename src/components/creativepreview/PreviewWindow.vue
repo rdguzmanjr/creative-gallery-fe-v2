@@ -8,7 +8,7 @@ const props=defineProps({creative:Object})
 </script>
 
 <template>
-    <CeltraWrapper v-if="creative.srctype=='celtra' "  :srcurl="creative.srcurl" :format="creative.format"></CeltraWrapper>
-    <VideoWrapper  v-else-if="creative.srctype=='video' "  :srcurl="creative.srcurl"></VideoWrapper>
-    <URLWrapper    v-else-if="creative.srctype=='url' "   :srcurl="creative.srcurl" :format="creative.format"></URLWrapper>
+    <CeltraWrapper v-if="creative.srctype == 'celtra'" :srcurl="creative.srcurl" :format="creative.format" />
+    <VideoWrapper v-else-if="creative.srctype == 'video'" :srcurl="creative.srcurl" :format="creative.format" />
+    <URLWrapper v-else-if="creative.srctype == 'url'" :srcurl="creative.srcurl" :format="creative.format" />
 </template>
