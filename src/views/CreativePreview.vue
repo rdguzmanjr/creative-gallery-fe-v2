@@ -6,10 +6,10 @@ import { useRoute, useRouter } from 'vue-router';
 import { onUnmounted } from 'vue';
 
 const route = useRoute();
-
 const creativeStore= useSingleCreativeStore();
 
 creativeStore.getCreativeById(route.params.id);
+
 
 
 onUnmounted(()=>{
