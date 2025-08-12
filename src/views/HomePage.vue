@@ -9,6 +9,7 @@ import CardWrapper from '../components/CardWrapper.vue';
 import FilterComponent from '../components/FilterComponent.vue';
 import PreloadImage from '../components/PreloadImage.vue'
 
+
 let showpreload=ref(false);
 import gsap from 'gsap'
 const creativewrapper=ref(null)
@@ -21,7 +22,10 @@ const filterStore= useFilterStore();
 creativeStore.getCreativeList();
 filterStore.getFilterList();
 
+creativeStore.view = "cardview";
+
 //infinite scroll logic
+
 
 window.onscroll=()=>{
    try{
@@ -59,6 +63,7 @@ setTimeout(()=>{
    <div id="wrapper" class="space-y-16" >
        <HeroSection/>
        <FilterComponent 
+         :whatsnews="filterStore.whatsnews"
          :categories="filterStore.categories"
          :advertisers="filterStore.advertisers"
          :products="filterStore.products"

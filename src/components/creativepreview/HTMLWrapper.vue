@@ -30,6 +30,8 @@ const props=defineProps({srchtml:String,format:String})
                         :width="cteexpanded?'100%':creativeStore.width"
                         :height="cteexpanded?'100%':creativeStore.height"
                         :src="srchtml"
+                        allow="geolocation; camera; microphone; gyroscope; accelerometer; fullscreen"
+                        sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads"
                     ></iframe>
             </div>
         </HTMLWrapperLayout>
@@ -38,6 +40,8 @@ const props=defineProps({srchtml:String,format:String})
         <iframe 
                 class="w-full h-full"
                 :src="srchtml"
+                allow="geolocation; camera; microphone; gyroscope; accelerometer; fullscreen"
+                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads"
             ></iframe>
     </div>
         <HTMLWrapperLayout v-else>
@@ -46,6 +50,8 @@ const props=defineProps({srchtml:String,format:String})
                     :width="creativeStore.width"
                     :height="creativeStore.height"
                     :src="srchtml"
+                    allow="geolocation; camera; microphone; gyroscope; accelerometer; fullscreen"
+                    sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads"
                 ></iframe>
             </div>
         </HTMLWrapperLayout>

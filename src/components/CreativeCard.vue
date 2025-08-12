@@ -2,8 +2,10 @@
 import {ref} from 'vue'
 import QRimage from '@/components/QRimage.vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useCreativeStore } from '@/stores/creative'
 const router = useRouter()
 //fix for flicker
+const creativeStore= useCreativeStore();
 
 const flip=ref(null)
 
@@ -28,6 +30,7 @@ let props=defineProps({creative:Object})
             <!-- card-front  -->
 
             <div id="cardfront" class="absolute backface-hidden">
+                    
                     <div class="rounded-2xl w-[300px] h-[290px] bg-brandgreen"></div>
                     <div class="absolute top-0 rounded-2xl w-[300px] h-[570px] bg-[url('../assets/images/cardcircle.png')] bg-no-repeat bg-[position:calc(100%-55px)_calc(100%-85px)] bg-[length:350px_auto]"></div>
                     <div class="absolute top-0 rounded-2xl w-[300px] h-[570px] bg-[url('../assets/images/cardbg.png')] bg-no-repeat bg-[position:center_calc(100%-20px)] bg-[length:250px_auto]"></div>
@@ -39,10 +42,30 @@ let props=defineProps({creative:Object})
                             <p class="text-md">Product: {{creative.format.name}}</p>
                             <p class="text-md">Category:</p>
                             <span class="text-xs bg-[#252a30] rounded-md px-3 text-white">{{creative.categories[0].name}}</span>
+                            <!-- <span
+                            v-for="(cat, index) in creative.categories"
+                            :key="index"
+                            class="text-xs rounded-md px-3 text-white mr-1"
+                            :class="creative.categories.some(c => c.name?.toLowerCase() === 'new')
+                                ? 'bg-[#ff5c00]'
+                                : 'bg-[#252a30]'"
+                            >
+                            {{ cat.name }}
+                            </span> -->
                         </div>
                     </div>
+                    <div
+                        v-if="creative.tags[0]?.name?.toLowerCase() === 'whatsnew'"
+                        class="absolute top-2 right-2 bg-[#ff5c00] text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg"
+                    >
+                        <div v-for="(tag, index) in creative.tags.slice(1)" :key="index">
+                        {{ tag.name }}
+                        </div>
+                        
+                    </div>
+                    
                     <div class="absolute top-[31.5rem] rounded-2xl w-[300px] h-[50px] bg-[url('../assets/images/cardcta.png')] bg-no-repeat bg-[position:calc(100%-25px)_calc(100%-10px)] bg-[length:250px_auto]"></div>
-
+                    
                 </div>
 
                 <!-- card-back -->

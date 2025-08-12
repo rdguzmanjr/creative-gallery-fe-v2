@@ -3,7 +3,11 @@
 import CeltraWrapper from './CeltraWrapper.vue'
 import VideoWrapper from './VideoWrapper.vue'
 import URLWrapper from './URLWrapper.vue'
+import { useCreativeStore } from '@/stores/creative'
 
+const creativeStore= useCreativeStore();
+
+creativeStore.view = "preview";
 const props=defineProps({creative:Object})
 </script>
 

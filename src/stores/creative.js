@@ -12,6 +12,7 @@ export const useCreativeStore = defineStore('creative', () => {
   let numpage=1;
   
   let maxpage=1;
+  let view = "cardview"
 
   //https://creative.nativetouch.io/api/creatives/
   async function getCreativeList() {
@@ -53,6 +54,22 @@ export const useCreativeStore = defineStore('creative', () => {
       console.error(error);
     }
   }
+
+  async function getSearchedWhatsNew() {
+    try {
+      numpage=1; //reset page number
+      creatives.value=[]; //reset creatives number just to show animation
+      http_string="https://creative.nativetouch.io/api/creatives/search/whatsnew";
+      const response = await axios.get(http_string);
+      creatives.value=response.data;
+      
+      console.log(response.data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+
   //https://creative.nativetouch.io/api/creatives/search/gsm
   async function loadMoreCreative(){
      try {
@@ -67,7 +84,7 @@ export const useCreativeStore = defineStore('creative', () => {
     }
   }
 
-  return { creatives,numpage, getCreativeList, getFilteredCreative , loadMoreCreative,getSearchedCreative }
+  return { creatives,numpage, view, getCreativeList, getFilteredCreative , loadMoreCreative,getSearchedCreative, getSearchedWhatsNew }
  
 })
 
@@ -86,6 +103,7 @@ export const useSingleCreativeStore= defineStore('singlecreative', () => {
   const isint = ref(null)
   const width = ref(null)
   const height = ref(null)
+  const whatsnew = ref(null)
   async function getCreativeById(id) {
     try {
       const response = await axios.get("https://creative.nativetouch.io/api/creatives/"+id);
@@ -100,7 +118,9 @@ export const useSingleCreativeStore= defineStore('singlecreative', () => {
       isint.value=response.data.format.size.banner.responsive;
       width.value=response.data.format.size.banner.width;
       height.value=response.data.format.size.banner.height;
-      console.log('getting singe creative... '+id);
+      whatsnew.value = response.data.tags;
+      
+      console.log('getting single creative... '+id);
     } catch (error) {
       console.error(error);
     }
@@ -117,8 +137,9 @@ export const useSingleCreativeStore= defineStore('singlecreative', () => {
       isint.value=null;
       width.value=null;
       height.value=null;
+      whatsnew.value=null;
   }
-  return { name,srctype,srcurl,ids ,format, category,kpi,spec,isint,width,height,getCreativeById,reset}
+  return { whatsnew,name,srctype,srcurl,ids ,format, category,kpi,spec,isint,width,height,getCreativeById,reset}
 });
 
 
@@ -128,6 +149,7 @@ export const useFilterStore= defineStore('filter', () => {
   const advertisers = ref([])
   const products = ref([])
   const kpis = ref([])
+  const whatsnews = ref([])
 
   async function getFilterList() {
     try {
@@ -138,14 +160,14 @@ export const useFilterStore= defineStore('filter', () => {
       advertisers.value=response.data.advertisers;
       products.value=response.data.formats;
       kpis.value=response.data.benchmark;
-      
+      // whatsnews.value=response.data.tags[1];
     } catch (error) {
       console.error(error);
     }
   }
 
 
-  return { categories, advertisers ,products, kpis ,getFilterList}
+  return { whatsnews, categories, advertisers ,products, kpis, getFilterList}
 });
 
 

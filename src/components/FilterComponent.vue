@@ -7,11 +7,13 @@ const category_search = defineModel('category_search');
 const advertiser_search = defineModel('advertiser_search');
 const product_search = defineModel('product_search');
 const kpi_search = defineModel('kpi_search');
+const whatsnew_search = defineModel('whatsnew_search');
 
 category_search.value=""; 
 advertiser_search.value="";
 product_search.value="";
 kpi_search.value="";
+whatsnew_search.value="";
 
 const creativeStore= useCreativeStore();
 
@@ -21,20 +23,21 @@ const selected_categories = ref([])
 const advertiser_open=ref(false);
 const selected_advertisers = ref([])
 
-
 const product_open=ref(false);
 const selected_products= ref([])
 
-
 const kpi_open=ref(false);
 const selected_kpis = ref([])
+
+const whatsnew_open=ref(false);
+// const selected_whatsnews = ref([])
 
 const generated_params=computed(()=>{
      let a = !selected_categories.value.length?'0':selected_categories.value.toString()
      let b = !selected_advertisers.value.length?'0':selected_advertisers.value.toString()
      let c = !selected_products.value.length?'0':selected_products.value.toString()
      let d = !selected_kpis.value.length?'0':selected_kpis.value.toString()
-     return a+'/'+b+'/'+c+'/'+d;
+    return a+'/'+b+'/'+c+'/'+d;
 })
 
 const noneselected=computed(()=>{
@@ -52,10 +55,15 @@ watch(generated_params, (newValue, oldValue) => {
 
 })
 
+function handler(){
+    console.log('click whats new')
+    creativeStore.getSearchedWhatsNew();
+}
+
 const categories=computed(()=>{
     const str=category_search.value.toLowerCase();
     return props.categories.filter((obj)=>{
-         return  obj.name.toLowerCase().includes(str) && (obj.name.toLowerCase()!=='bls')
+         return  obj.name.toLowerCase().includes(str) && (obj.name.toLowerCase()!=='bls') && (obj.name.toLowerCase()!=='new')
     });
 
 })
@@ -82,6 +90,25 @@ const kpis=computed(()=>{
 
 })
 
+const whatsnews=computed(()=>{
+    // const str=category_search.value.toLowerCase();
+    
+    // return props.categories.filter((obj)=>{
+    //      return   (obj.name.toLowerCase()=='new')
+    // });
+    // const str = product_search.value.toLowerCase();
+    // return props.products.filter((obj)=>{
+
+    // return obj.name.toLowerCase().includes(str)&&(obj.name.toLowerCase()!=='big box')  && (obj.name.toLowerCase()!=='vertical video')&& (obj.name.toLowerCase()!=='interscroller')
+    
+    // });
+
+//     const newCat = props.categories.find(cat => cat.name.toLowerCase() === 'new');
+//    if (!newCat) return [];
+//   const newProductIds = newCat.products?.map(prod => prod.id) || [];
+//   return props.products.filter(p => newProductIds.includes(p.id));
+  
+})
 
 const handlekeypress=(e)=>{
     if(e.key=="Enter")
@@ -92,10 +119,12 @@ const clearFilter=()=>{
     selected_advertisers.value=[];
     selected_products.value=[];
     selected_kpis.value=[];
+    // selected_whatsnews.value=[];
     category_open.value=false;
     advertiser_open.value=false;
     product_open.value=false;
     kpi_open.value=false;
+    whatsnew_open.value=false;
 }
 const props=defineProps({categories:Array,advertisers:Array,products:Array,kpis:Array})
 </script>
@@ -113,6 +142,23 @@ const props=defineProps({categories:Array,advertisers:Array,products:Array,kpis:
         </div>
         <hr class="border-gray-300 mb-3">
        
+        <!-- whatsnew -->
+        <div class="p-2 bg-brandgreen mb-3 relative rounded-full flex items-center justify-center" @click="handler">
+            <p class= " text-white font-bold">What's new?</p>
+            <!-- <fa-icon :icon="['fas', 'list']" class="transition-transform ease-out duration-[500ms] backdrop:relative text-brandgreen text-xl absolute top-2 left-3"/>
+            <fa-icon :icon="['fas', 'chevron-down']" class="transition-transform ease-out duration-[500ms] backdrop:relative text-brandgreen text-xl absolute top-2 right-3" 
+            :class="whatsnew_open?'-rotate-180':'rotate-0'"/> -->
+       </div>
+       <!-- <div class="space-y-3 mb-3" :class="whatsnew_open?'block':'hidden'">
+            <input v-model="whatsnew_search" type="search" id="default-search" class="block w-full p-1 ps-5 text-md text-white bg-black border focus:border-brandgreen focus:ring-brandgreen rounded-md outline-none"  
+            placeholder="Search New Products" required />
+            <p class="text-white text-md" v-if="whatsnews.length==0">No new products to show</p>
+            <div class="flex items-center" v-for="whatsnew in whatsnews" :key="whatsnew">
+                <input :id="`whatsnew-link-${whatsnew.name}`" v-model="selected_products" type="checkbox" :value="`${whatsnew.id}`" class="w-4 h-4 text-brandgreen bg-gray-100 border-gray-300 rounded-lg focus:ring-brandgreen focus:ring-2 accent-brandgreen outline-none">
+                <label :for="`whatsnew-link-${whatsnew.name}`" class="ms-2 text-md">{{whatsnew.name}}</label>
+            </div>
+        </div> -->
+
        <!-- category -->
         <div class="p-2 bg-gray-800 mb-3 relative" @click.prevent="category_open=!category_open">
             <p class="ps-9">Categories</p>

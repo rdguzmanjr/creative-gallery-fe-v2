@@ -26,7 +26,7 @@ const props=defineProps({srcurl:String,format:String})
                 class="w-screen h-screen md:w-[340px] md:h-[677px] pointer-events-auto"
                 id="nt_iframe"
                 :src="`https://preview-sandbox.celtra.com/preview/${srcurl}/frame?overrides.deviceInfo.deviceType=Phone&amp;rp.standalonePreview=1`"
-                sandbox="allow-scripts allow-popups allow-same-origin">
+                sandbox="allow-scripts allow-popups allow-same-origin allow-downloads">
             </iframe>
             <div class="hidden md:block absolute -top-[136.8px] -left-[90px] w-[520px] pointer-events-none">
                  <img width=520 src="/src/assets/images/phone.png"/>
@@ -43,7 +43,7 @@ const props=defineProps({srcurl:String,format:String})
                 class="pointer-events-auto w-[1280px] h-[760px]"
                 id="nt_iframe"
                 :src="`https://preview-sandbox.celtra.com/preview/${srcurl}/frame?overrides.deviceInfo.deviceType=Phone&amp;rp.standalonePreview=1`"
-                sandbox="allow-scripts allow-popups allow-same-origin">
+                sandbox="allow-scripts allow-popups allow-same-origin allow-downloads">
             </iframe>
             <div class="hidden md:block absolute -top-[25px] -left-[35px] w-[1350px] pointer-events-none">
                 <img width=1350 src="/src/assets/images/desktop.png"/>
@@ -58,7 +58,7 @@ const props=defineProps({srcurl:String,format:String})
          class="pointer-events-auto w-[768px] h-[1024px]"
          id="nt_iframe"
          :src="`https://preview-sandbox.celtra.com/preview/${srcurl}/frame?overrides.deviceInfo.deviceType=Phone&amp;rp.standalonePreview=1`"
-         sandbox="allow-scripts allow-popups allow-same-origin">
+         sandbox="allow-scripts allow-popups allow-same-origin allow-downloads">
      </iframe>
       <div class="hidden md:block absolute -top-[30px] -left-[20px] w-[820px] pointer-events-none">
                 <img width=820 src="/src/assets/images/tablet.png"/>
