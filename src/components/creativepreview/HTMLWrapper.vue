@@ -20,6 +20,8 @@ window.addEventListener("message", (event) => {
 }, false);
 
 const props=defineProps({srchtml:String,format:String})
+                      //  sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads"
+
 </script>
 
 <template>
@@ -31,7 +33,6 @@ const props=defineProps({srchtml:String,format:String})
                         :height="cteexpanded?'100%':creativeStore.height"
                         :src="srchtml"
                         allow="geolocation; camera; microphone; gyroscope; accelerometer; fullscreen"
-                        sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads"
                     ></iframe>
             </div>
         </HTMLWrapperLayout>
@@ -41,7 +42,6 @@ const props=defineProps({srchtml:String,format:String})
                 class="w-full h-full"
                 :src="srchtml"
                 allow="geolocation; camera; microphone; gyroscope; accelerometer; fullscreen"
-                sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads"
             ></iframe>
     </div>
         <HTMLWrapperLayout v-else>
@@ -51,7 +51,6 @@ const props=defineProps({srchtml:String,format:String})
                     :height="creativeStore.height"
                     :src="srchtml"
                     allow="geolocation; camera; microphone; gyroscope; accelerometer; fullscreen"
-                    sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads"
                 ></iframe>
             </div>
         </HTMLWrapperLayout>
