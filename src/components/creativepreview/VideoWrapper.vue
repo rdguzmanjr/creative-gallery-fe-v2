@@ -118,10 +118,10 @@ watch(() => props.srcurl, () => {
       <div
         class="hidden md:block pointer-events-none absolute"
         :class="isPortrait 
-          ? 'md:-top-[4px] md:-left-[280px] md:w-[800px] lg:w-[800px] 2xl:w-[800px]' 
+          ? 'md:-top-[10.5px] md:-left-[10px] md:w-[800px] lg:w-[800px] 2xl:w-[800px]' 
           : 'md:-top-[8.5px] md:-left-[5px] md:w-[410px] lg:w-[610px] 2xl:w-[730px]'"
       >
-        <img width="800" :src="isPortrait ? digiboardImg : tvImg" />
+        <img width="260" :src="isPortrait ? digiboardImg : tvImg" />
       </div>
 
       <!-- Mute Prompt -->
