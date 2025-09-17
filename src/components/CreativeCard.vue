@@ -57,10 +57,10 @@ let props=defineProps({creative:Object})
                     <div
                         v-if="creative.tags[0]?.name?.toLowerCase() === 'whatsnew'"
                         class="absolute top-2 right-2 bg-[#ff5c00] text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg"
-                    >
-                        <div v-for="(tag, index) in creative.tags.slice(1)" :key="index">
+                    >   New
+                        <!-- <div v-for="(tag, index) in creative.tags.slice(1)" :key="index">
                         {{ tag.name }}
-                        </div>
+                        </div> -->
                         
                     </div>
                     

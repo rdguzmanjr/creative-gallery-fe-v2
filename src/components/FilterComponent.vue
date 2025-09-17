@@ -143,7 +143,7 @@ const props=defineProps({categories:Array,advertisers:Array,products:Array,kpis:
         <hr class="border-gray-300 mb-3">
        
         <!-- whatsnew -->
-        <div class="p-2 bg-brandgreen mb-3 relative rounded-full flex items-center justify-center" @click="handler">
+        <div class="p-2 bg-brandorange mb-3 relative rounded-full flex items-center justify-center" @click="handler">
             <p class= " text-white font-bold">What's new?</p>
             <!-- <fa-icon :icon="['fas', 'list']" class="transition-transform ease-out duration-[500ms] backdrop:relative text-brandgreen text-xl absolute top-2 left-3"/>
             <fa-icon :icon="['fas', 'chevron-down']" class="transition-transform ease-out duration-[500ms] backdrop:relative text-brandgreen text-xl absolute top-2 right-3" 
