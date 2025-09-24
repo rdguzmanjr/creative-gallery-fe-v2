@@ -122,7 +122,7 @@ watch(() => props.srcurl, () => {
           : 'md:-top-[8.5px] md:-left-[5px] md:w-[410px] lg:w-[610px] 2xl:w-[730px]'"
       >
         <img 
-        :width="isPortrait ? 260 : 620" 
+        :width="isPortrait ? 260 : 730" 
         :src="isPortrait ? digiboardImg : tvImg" 
         />
       </div>
