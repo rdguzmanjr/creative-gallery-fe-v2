@@ -112,7 +112,7 @@ export const useSingleCreativeStore= defineStore('singlecreative', () => {
       format.value=response.data.format.name;
       category.value=response.data.categories[0].name;
       kpi.value=response.data.format.benchmarks.map(item=>item.name).join(',');
-      spec.value=response.data.specs.path;
+      spec.value = response.data.specs?.path ?? "";
       srctype.value=response.data.typeObj.type;
       srcurl.value=response.data.typeObj.path;
       isint.value=response.data.format.size.banner.responsive;
