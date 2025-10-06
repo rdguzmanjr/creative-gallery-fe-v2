@@ -1,5 +1,5 @@
 <script setup>
-import { ref, computed, watch, onMounted } from 'vue'
+import { ref, computed, watch } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useCreativeStore } from '@/stores/creative'
 
@@ -7,7 +7,9 @@ const router = useRouter()
 const route = useRoute()
 const creativeStore = useCreativeStore()
 
-// define models
+// -------------------------------
+// Define models (for search inputs)
+// -------------------------------
 const search = defineModel('search')
 const category_search = defineModel('category_search')
 const advertiser_search = defineModel('advertiser_search')
@@ -15,7 +17,9 @@ const product_search = defineModel('product_search')
 const kpi_search = defineModel('kpi_search')
 const whatsnew_search = defineModel('whatsnew_search')
 
-// filters
+// -------------------------------
+// Filter open states & selections
+// -------------------------------
 const category_open = ref(false)
 const selected_categories = ref([])
 
@@ -30,15 +34,19 @@ const selected_kpis = ref([])
 
 const whatsnew_open = ref(false)
 
-// PROPS
+// -------------------------------
+// Props
+// -------------------------------
 const props = defineProps({
   categories: { type: Array, default: () => [] },
   advertisers: { type: Array, default: () => [] },
   products: { type: Array, default: () => [] },
   kpis: { type: Array, default: () => [] },
-});
+})
 
-// --- COMPUTED PARAM STRING ---
+// -------------------------------
+// Computed Helpers
+// -------------------------------
 const generated_params = computed(() => {
   const a = !selected_categories.value.length ? '0' : selected_categories.value.toString()
   const b = !selected_advertisers.value.length ? '0' : selected_advertisers.value.toString()
@@ -48,52 +56,95 @@ const generated_params = computed(() => {
 })
 
 const noneselected = computed(() => {
-  const a = !selected_categories.value.length
-  const b = !selected_advertisers.value.length
-  const c = !selected_products.value.length
-  const d = !selected_kpis.value.length
-  return a && b && c && d
+  return (
+    !selected_categories.value.length &&
+    !selected_advertisers.value.length &&
+    !selected_products.value.length &&
+    !selected_kpis.value.length
+  )
 })
 
-// --- WATCH PARAMS: FETCH + UPDATE URL ---
+// -------------------------------
+// Utility functions
+// -------------------------------
+function slugify(str) {
+  return str?.toLowerCase().trim().replace(/\s+/g, '-')
+}
+
+function idsToNames(ids, list) {
+  return ids
+    .map(id => list.find(item => item.id == id)?.name)
+    .filter(Boolean)
+}
+
+function namesToIds(names, list) {
+  return (names || '')
+    .split(',')
+    .map(n =>
+      list.find(
+        item => slugify(item.name) === slugify(n)
+      )?.id
+    )
+    .filter(Boolean)
+}
+
+// -------------------------------
+// Filter synchronization logic
+// -------------------------------
+const restoredOnce = ref(false)
+
+function restoreFromURL() {
+  const { categories, advertisers, products, kpis } = route.query
+
+  if (categories) selected_categories.value = namesToIds(categories, props.categories)
+  if (advertisers) selected_advertisers.value = namesToIds(advertisers, props.advertisers)
+  if (products) selected_products.value = namesToIds(products, props.products)
+  if (kpis) selected_kpis.value = namesToIds(kpis, props.kpis)
+
+  creativeStore.getFilteredCreative(generated_params.value)
+  restoredOnce.value = true
+}
+
+// Wait until props data is available before restoring
+watch(
+  () => [props.categories, props.advertisers, props.products, props.kpis],
+  (vals) => {
+    const allReady = vals.every(v => Array.isArray(v) && v.length)
+    if (allReady && !restoredOnce.value) {
+      restoreFromURL()
+    }
+  },
+  { deep: true, immediate: true }
+)
+
+// Update URL and trigger filter when user interacts
 watch(
   [selected_categories, selected_advertisers, selected_products, selected_kpis],
   ([cats, ads, prods, kpis]) => {
+    if (!restoredOnce.value) return
+
     const query = {}
 
-    if (cats.length) query.categories = cats.join(',')
-    if (ads.length) query.advertisers = ads.join(',')
-    if (prods.length) query.products = prods.join(',')
-    if (kpis.length) query.kpis = kpis.join(',')
+    if (cats.length) query.categories = idsToNames(cats, props.categories).map(slugify).join(',')
+    if (ads.length) query.advertisers = idsToNames(ads, props.advertisers).map(slugify).join(',')
+    if (prods.length) query.products = idsToNames(prods, props.products).map(slugify).join(',')
+    if (kpis.length) query.kpis = idsToNames(kpis, props.kpis).map(slugify).join(',')
 
-    // sync URL (replace = no history spam)
     router.replace({ query })
-
-    // trigger your creative filtering
     creativeStore.getFilteredCreative(generated_params.value)
   },
   { deep: true }
 )
 
-// --- RESTORE FILTERS FROM URL ---
-onMounted(() => {
-  const { categories, advertisers, products, kpis } = route.query
-
-  if (categories) selected_categories.value = categories.split(',')
-  if (advertisers) selected_advertisers.value = advertisers.split(',')
-  if (products) selected_products.value = products.split(',')
-  if (kpis) selected_kpis.value = kpis.split(',')
-
-  creativeStore.getFilteredCreative(generated_params.value)
-})
-
-// --- HANDLERS ---
-function handler() {
-  creativeStore.getSearchedWhatsNew()
+// -------------------------------
+// Search + Button Handlers
+// -------------------------------
+const handlekeypress = e => {
+  if (e.key === 'Enter') creativeStore.getSearchedCreative(search.value)
 }
 
-const handlekeypress = (e) => {
-  if (e.key === 'Enter') creativeStore.getSearchedCreative(search.value)
+const handler = () => {
+  creativeStore.getSearchedWhatsNew()
 }
 
 const clearFilter = () => {
@@ -108,47 +159,50 @@ const clearFilter = () => {
   kpi_open.value = false
   whatsnew_open.value = false
 
-  // clear the URL
   router.replace({ query: {} })
 }
 
-// --- FILTER SEARCHING ---
+// -------------------------------
+// Computed filter lists
+// -------------------------------
 const categories = computed(() => {
-  const str = (category_search.value || '').toLowerCase();
+  const str = (category_search.value || '').toLowerCase()
   return (props.categories || [])
-    .filter(obj => obj && obj.name && typeof obj.name === 'string')
-    .filter(obj =>
-      obj.name.toLowerCase().includes(str) &&
-      obj.name.toLowerCase() !== 'bls' &&
-      obj.name.toLowerCase() !== 'new'
-    );
-});
+    .filter(obj => obj && obj.name)
+    .filter(
+      obj =>
+        obj.name.toLowerCase().includes(str) &&
+        obj.name.toLowerCase() !== 'bls' &&
+        obj.name.toLowerCase() !== 'new'
+    )
+})
 
 const advertisers = computed(() => {
-  const str = (advertiser_search.value || '').toLowerCase();
+  const str = (advertiser_search.value || '').toLowerCase()
   return (props.advertisers || [])
-    .filter(obj => obj && obj.name && typeof obj.name === 'string')
-    .filter(obj => obj.name.toLowerCase().includes(str));
-});
+    .filter(obj => obj && obj.name)
+    .filter(obj => obj.name.toLowerCase().includes(str))
+})
 
 const products = computed(() => {
-  const str = (product_search.value || '').toLowerCase();
+  const str = (product_search.value || '').toLowerCase()
   return (props.products || [])
-    .filter(obj => obj && obj.name && typeof obj.name === 'string')
-    .filter(obj =>
-      obj.name.toLowerCase().includes(str) &&
-      obj.name.toLowerCase() !== 'big box' &&
-      obj.name.toLowerCase() !== 'vertical video' &&
-      obj.name.toLowerCase() !== 'interscroller'
-    );
-});
+    .filter(obj => obj && obj.name)
+    .filter(
+      obj =>
+        obj.name.toLowerCase().includes(str) &&
+        obj.name.toLowerCase() !== 'big box' &&
+        obj.name.toLowerCase() !== 'vertical video' &&
+        obj.name.toLowerCase() !== 'interscroller'
+    )
+})
 
 const kpis = computed(() => {
-  const str = (kpi_search.value || '').toLowerCase();
+  const str = (kpi_search.value || '').toLowerCase()
   return (props.kpis || [])
-    .filter(obj => obj && obj.name && typeof obj.name === 'string')
-    .filter(obj => obj.name.toLowerCase().includes(str));
-});
+    .filter(obj => obj && obj.name)
+    .filter(obj => obj.name.toLowerCase().includes(str))
+})
 </script>
 
 <template>
