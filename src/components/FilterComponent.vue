@@ -1,132 +1,154 @@
 <script setup>
-import {ref,computed,watch} from 'vue'
+import { ref, computed, watch, onMounted } from 'vue'
+import { useRouter, useRoute } from 'vue-router'
 import { useCreativeStore } from '@/stores/creative'
 
-const search = defineModel('search');
-const category_search = defineModel('category_search');
-const advertiser_search = defineModel('advertiser_search');
-const product_search = defineModel('product_search');
-const kpi_search = defineModel('kpi_search');
-const whatsnew_search = defineModel('whatsnew_search');
+const router = useRouter()
+const route = useRoute()
+const creativeStore = useCreativeStore()
 
-category_search.value=""; 
-advertiser_search.value="";
-product_search.value="";
-kpi_search.value="";
-whatsnew_search.value="";
+// define models
+const search = defineModel('search')
+const category_search = defineModel('category_search')
+const advertiser_search = defineModel('advertiser_search')
+const product_search = defineModel('product_search')
+const kpi_search = defineModel('kpi_search')
+const whatsnew_search = defineModel('whatsnew_search')
 
-const creativeStore= useCreativeStore();
-
-const category_open=ref(false);
+// filters
+const category_open = ref(false)
 const selected_categories = ref([])
 
-const advertiser_open=ref(false);
+const advertiser_open = ref(false)
 const selected_advertisers = ref([])
 
-const product_open=ref(false);
-const selected_products= ref([])
+const product_open = ref(false)
+const selected_products = ref([])
 
-const kpi_open=ref(false);
+const kpi_open = ref(false)
 const selected_kpis = ref([])
 
-const whatsnew_open=ref(false);
-// const selected_whatsnews = ref([])
+const whatsnew_open = ref(false)
 
-const generated_params=computed(()=>{
-     let a = !selected_categories.value.length?'0':selected_categories.value.toString()
-     let b = !selected_advertisers.value.length?'0':selected_advertisers.value.toString()
-     let c = !selected_products.value.length?'0':selected_products.value.toString()
-     let d = !selected_kpis.value.length?'0':selected_kpis.value.toString()
-    return a+'/'+b+'/'+c+'/'+d;
+// PROPS
+const props = defineProps({
+  categories: { type: Array, default: () => [] },
+  advertisers: { type: Array, default: () => [] },
+  products: { type: Array, default: () => [] },
+  kpis: { type: Array, default: () => [] },
+});
+
+// --- COMPUTED PARAM STRING ---
+const generated_params = computed(() => {
+  const a = !selected_categories.value.length ? '0' : selected_categories.value.toString()
+  const b = !selected_advertisers.value.length ? '0' : selected_advertisers.value.toString()
+  const c = !selected_products.value.length ? '0' : selected_products.value.toString()
+  const d = !selected_kpis.value.length ? '0' : selected_kpis.value.toString()
+  return `${a}/${b}/${c}/${d}`
 })
 
-const noneselected=computed(()=>{
-     let a = !selected_categories.value.length;
-     let b = !selected_advertisers.value.length;
-     let c = !selected_products.value.length;
-     let d = !selected_kpis.value.length;
-     return (a&&b&&c&&d);
+const noneselected = computed(() => {
+  const a = !selected_categories.value.length
+  const b = !selected_advertisers.value.length
+  const c = !selected_products.value.length
+  const d = !selected_kpis.value.length
+  return a && b && c && d
 })
 
+// --- WATCH PARAMS: FETCH + UPDATE URL ---
+watch(
+  [selected_categories, selected_advertisers, selected_products, selected_kpis],
+  ([cats, ads, prods, kpis]) => {
+    const query = {}
 
-watch(generated_params, (newValue, oldValue) => {
-   
-    creativeStore.getFilteredCreative(newValue);
+    if (cats.length) query.categories = cats.join(',')
+    if (ads.length) query.advertisers = ads.join(',')
+    if (prods.length) query.products = prods.join(',')
+    if (kpis.length) query.kpis = kpis.join(',')
 
+    // sync URL (replace = no history spam)
+    router.replace({ query })
+
+    // trigger your creative filtering
+    creativeStore.getFilteredCreative(generated_params.value)
+  },
+  { deep: true }
+)
+
+// --- RESTORE FILTERS FROM URL ---
+onMounted(() => {
+  const { categories, advertisers, products, kpis } = route.query
+
+  if (categories) selected_categories.value = categories.split(',')
+  if (advertisers) selected_advertisers.value = advertisers.split(',')
+  if (products) selected_products.value = products.split(',')
+  if (kpis) selected_kpis.value = kpis.split(',')
+
+  creativeStore.getFilteredCreative(generated_params.value)
 })
 
-function handler(){
-    console.log('click whats new')
-    creativeStore.getSearchedWhatsNew();
+// --- HANDLERS ---
+function handler() {
+  creativeStore.getSearchedWhatsNew()
 }
 
-const categories=computed(()=>{
-    const str=category_search.value.toLowerCase();
-    return props.categories.filter((obj)=>{
-         return  obj.name.toLowerCase().includes(str) && (obj.name.toLowerCase()!=='bls') && (obj.name.toLowerCase()!=='new')
-    });
-
-})
-
-
-const advertisers=computed(()=>{
-    const str=advertiser_search.value.toLowerCase();
-    return props.advertisers.filter((obj)=>obj.name.toLowerCase().includes(str));
-
-})
-
-const products=computed(()=>{
-   const str=product_search.value.toLowerCase();
-   return props.products.filter((obj)=>{
-
-    return obj.name.toLowerCase().includes(str)&&(obj.name.toLowerCase()!=='big box')  && (obj.name.toLowerCase()!=='vertical video')&& (obj.name.toLowerCase()!=='interscroller')
-    
-    });
-})
-
-const kpis=computed(()=>{
-    const str=kpi_search.value.toLowerCase();
-    return props.kpis.filter((obj)=>obj.name.toLowerCase().includes(str));
-
-})
-
-const whatsnews=computed(()=>{
-    // const str=category_search.value.toLowerCase();
-    
-    // return props.categories.filter((obj)=>{
-    //      return   (obj.name.toLowerCase()=='new')
-    // });
-    // const str = product_search.value.toLowerCase();
-    // return props.products.filter((obj)=>{
-
-    // return obj.name.toLowerCase().includes(str)&&(obj.name.toLowerCase()!=='big box')  && (obj.name.toLowerCase()!=='vertical video')&& (obj.name.toLowerCase()!=='interscroller')
-    
-    // });
-
-//     const newCat = props.categories.find(cat => cat.name.toLowerCase() === 'new');
-//    if (!newCat) return [];
-//   const newProductIds = newCat.products?.map(prod => prod.id) || [];
-//   return props.products.filter(p => newProductIds.includes(p.id));
-  
-})
-
-const handlekeypress=(e)=>{
-    if(e.key=="Enter")
-    creativeStore.getSearchedCreative(search.value);
+const handlekeypress = (e) => {
+  if (e.key === 'Enter') creativeStore.getSearchedCreative(search.value)
 }
-const clearFilter=()=>{
-    selected_categories.value=[];
-    selected_advertisers.value=[];
-    selected_products.value=[];
-    selected_kpis.value=[];
-    // selected_whatsnews.value=[];
-    category_open.value=false;
-    advertiser_open.value=false;
-    product_open.value=false;
-    kpi_open.value=false;
-    whatsnew_open.value=false;
+
+const clearFilter = () => {
+  selected_categories.value = []
+  selected_advertisers.value = []
+  selected_products.value = []
+  selected_kpis.value = []
+
+  category_open.value = false
+  advertiser_open.value = false
+  product_open.value = false
+  kpi_open.value = false
+  whatsnew_open.value = false
+
+  // clear the URL
+  router.replace({ query: {} })
 }
-const props=defineProps({categories:Array,advertisers:Array,products:Array,kpis:Array})
+
+// --- FILTER SEARCHING ---
+const categories = computed(() => {
+  const str = (category_search.value || '').toLowerCase();
+  return (props.categories || [])
+    .filter(obj => obj && obj.name && typeof obj.name === 'string')
+    .filter(obj =>
+      obj.name.toLowerCase().includes(str) &&
+      obj.name.toLowerCase() !== 'bls' &&
+      obj.name.toLowerCase() !== 'new'
+    );
+});
+
+const advertisers = computed(() => {
+  const str = (advertiser_search.value || '').toLowerCase();
+  return (props.advertisers || [])
+    .filter(obj => obj && obj.name && typeof obj.name === 'string')
+    .filter(obj => obj.name.toLowerCase().includes(str));
+});
+
+const products = computed(() => {
+  const str = (product_search.value || '').toLowerCase();
+  return (props.products || [])
+    .filter(obj => obj && obj.name && typeof obj.name === 'string')
+    .filter(obj =>
+      obj.name.toLowerCase().includes(str) &&
+      obj.name.toLowerCase() !== 'big box' &&
+      obj.name.toLowerCase() !== 'vertical video' &&
+      obj.name.toLowerCase() !== 'interscroller'
+    );
+});
+
+const kpis = computed(() => {
+  const str = (kpi_search.value || '').toLowerCase();
+  return (props.kpis || [])
+    .filter(obj => obj && obj.name && typeof obj.name === 'string')
+    .filter(obj => obj.name.toLowerCase().includes(str));
+});
 </script>
 
 <template>

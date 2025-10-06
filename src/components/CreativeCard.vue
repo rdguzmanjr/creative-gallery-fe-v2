@@ -32,7 +32,7 @@ let props=defineProps({creative:Object})
             <div id="cardfront" class="absolute backface-hidden">
                     
                     <div class="rounded-2xl w-[300px] h-[290px] bg-brandgreen"></div>
-                    <div class="absolute top-0 rounded-2xl w-[300px] h-[570px] bg-[url('../assets/images/cardcircle.png')] bg-no-repeat bg-[position:calc(100%-55px)_calc(100%-85px)] bg-[length:350px_auto]"></div>
+                    <!-- <div class="absolute top-0 rounded-2xl w-[300px] h-[570px] bg-[url('../assets/images/cardcircle.png')] bg-no-repeat bg-[position:calc(100%-55px)_calc(100%-85px)] bg-[length:350px_auto]"></div> -->
                     <div class="absolute top-0 rounded-2xl w-[300px] h-[570px] bg-[url('../assets/images/cardbg.png')] bg-no-repeat bg-[position:center_calc(100%-20px)] bg-[length:250px_auto]"></div>
                     <div class="absolute top-0 rounded-2xl w-[300px] h-[278px] bg-center bg-cover" :style="`background-image: url(${creative.thumbnail})`"></div>
                     <div class="info mx-5 my-3 space-y-20 mt-5">
@@ -76,7 +76,7 @@ let props=defineProps({creative:Object})
                         <QRimage :creativeId="creative.id"></QRimage>
                     </div>
                   
-                    <div class="absolute top-0 rounded-2xl w-[300px] h-[570px] bg-[url('../assets/images/cardcircle.png')] bg-no-repeat bg-[position:calc(100%-55px)_calc(100%-85px)] bg-[length:350px_auto]"></div>
+                    <!-- <div class="absolute top-0 rounded-2xl w-[300px] h-[570px] bg-[url('../assets/images/cardcircle.png')] bg-no-repeat bg-[position:calc(100%-55px)_calc(100%-85px)] bg-[length:350px_auto]"></div> -->
                     <div class="absolute top-0 rounded-2xl w-[300px] h-[570px] bg-[url('../assets/images/cardbg.png')] bg-no-repeat bg-[position:center_calc(100%-20px)] bg-[length:250px_auto]"></div>
                     <div class="info mx-5 my-3 space-y-20 mt-5">
                         <p class="absolute top-[19rem] font-volkorn font-black text-2xl">{{creative.name}}</p>

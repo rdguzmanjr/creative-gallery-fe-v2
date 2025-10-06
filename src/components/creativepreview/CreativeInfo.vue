@@ -11,7 +11,7 @@ const props=defineProps({creative:Object})
   min-w-[20rem] 2xl:min-w-[25rem]
   2xl:space-y-16 z-[0]
   ">
-  <div class="absolute top-[43.5%] md:top-[44.5%] lg:top-[40.5%] xl:top-[44.5%] 2xl:top-[44.5%]  w-[341px] h-[288px] bg-[url('../assets/images/cardcircle.png')] bg-no-repeat bg-[position:calc(100%-100px)_calc(100%-85px)] bg-[length:341px_auto]"></div>
+  <!-- <div class="absolute top-[43.5%] md:top-[44.5%] lg:top-[40.5%] xl:top-[44.5%] 2xl:top-[44.5%]  w-[341px] h-[288px] bg-[url('../assets/images/cardcircle.png')] bg-no-repeat bg-[position:calc(100%-100px)_calc(100%-85px)] bg-[length:341px_auto]"></div> -->
 
       <div class="space-y-4">
         <p class="text-md 2xl:text-lg">Preview creative on your device</p>
