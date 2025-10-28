@@ -57,9 +57,11 @@ watch(() => props.srcurl, () => {
     <!-- Phone content wrapper -->
     <div
       id="phone-wrapper"
-      class="max-w-[340px] md:h-auto aspect-[340/677] block 
+      class="w-screen md:max-w-[340px] md:h-auto aspect-[340/677] block 
         md:absolute md:-translate-y-2/4 md:top-[50%] md:-translate-x-2/4 md:left-[30%] 
         lg:left-[50%] 2xl:left-[60%]"
+
+        
     >
       <!-- HTML content displayed inside the phone -->
      <!-- Video Element -->
@@ -69,7 +71,7 @@ watch(() => props.srcurl, () => {
         playsinline
         controls
         ref="ctv"
-        class="w-screen h-screen md:h-auto aspect-[340/677]"
+        class="w-screen h-screen md:h-auto  aspect-[340/677]"
       >
         <source :src="props.srcurl" type="video/mp4" />
       </video>

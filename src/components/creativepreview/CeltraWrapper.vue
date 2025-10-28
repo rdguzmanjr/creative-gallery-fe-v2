@@ -4,13 +4,91 @@ import {ref} from 'vue'
 
 const adview= ref('phone');
 
+import digiboardImg from '@/assets/images/digiboard.png'
+import tvImg from '@/assets/images/tv.png'
+const ctv = ref(null)
+const showmute = ref(true)
+const isPortrait = ref(false)
+
 const props=defineProps({srcurl:String,format:String})
 
 </script>
 
 <template>
+     <!-- <p class="text-white">TEST {{ format }}</p> -->
+     <div v-if="format=='CTV Floating Hero' || format === 'CTV Storyline' " id="celtra-wrapper" class="bg-[#373B43] relative w-12/12 md:w-9/12">
+       
+        <div class="hidden md:block bg-no-repeat bg-[url('../assets/images/cardbg.png')] absolute top-0 
+        w-full h-full bg-[length:400px_auto] bg-[position:calc(100%-50px)_calc(100%+50px)]
+        md:w-[500px] md:h-[570px] md:bg-[length:500px_auto] 
+        lg:w-[900px] lg:h-[570px] lg:bg-[length:700px_auto] lg:bg-[position:calc(100%-150px)_calc(100%)]
+        xl:w-[1000px] xl:h-[600px] xl:bg-[length:800px_auto] xl:bg-[position:calc(100%-50px)_calc(100%+100px)]
+        2xl:w-[1500px] 2xl:h-[700px] 2xl:bg-[length:900px_auto] 2xl:bg-[position:calc(100%-200px)_calc(100%+50px)]
+        "></div>
+    
+    <!-- Background Image -->
+    <div
+      class="hidden md:block absolute top-0 w-full h-full bg-no-repeat
+        bg-[url('../assets/images/cardbg.png')] bg-[length:400px_auto] 
+        bg-[position:calc(100%-50px)_calc(100%+50px)]
+        md:w-[500px] md:h-[570px] md:bg-[length:500px_auto]
+        lg:w-[900px] lg:h-[570px] lg:bg-[length:700px_auto] lg:bg-[position:calc(100%-150px)_calc(100%)]
+        xl:w-[1000px] xl:h-[600px] xl:bg-[length:800px_auto] xl:bg-[position:calc(100%-50px)_calc(100%+100px)]
+        2xl:w-[1500px] 2xl:h-[700px] 2xl:bg-[length:900px_auto] 2xl:bg-[position:calc(100%-200px)_calc(100%+50px)]"
+    ></div>
+
+    <!-- TV Wrapper -->
+    <div
+      id="tv-wrapper"
+      :class="isPortrait 
+        ? 'md:w-[280px] lg:w-[280px] 2xl:w-[280px] aspect-[9/16] block md:absolute md:-translate-y-2/4 md:top-[45%] md:-translate-x-2/4 md:left-[50%] lg:left-[50%] 2xl:left-[55%]' 
+        : 'md:w-[400px] lg:w-[600px] 2xl:w-[720px] aspect-[16/9] block md:absolute md:-translate-y-2/4 md:top-[40%] md:-translate-x-2/4 md:left-[50%] lg:left-[50%] 2xl:left-[55%]'"
+    >
+      <!-- Video Element -->
+      <iframe 
+                id="nt_iframe"
+                :src="`https://preview-sandbox.celtra.com/preview/${srcurl}/frame?overrides.deviceInfo.deviceType=Phone&amp;rp.standalonePreview=1`"
+                sandbox="allow-scripts allow-popups allow-same-origin allow-downloads"
+                :class="isPortrait 
+                ? 'md:w-[240px] lg:w-[240px] 2xl:w-[240px] aspect-[9/16]' 
+                : 'md:w-[400px] lg:w-[600px] 2xl:w-[720px] aspect-[16/9]'"
+                class="w-screen h-screen md:h-auto"
+                >
+                
+                
+            </iframe>
+
+      <!-- Overlay Image -->
+      <div
+        class="hidden md:block pointer-events-none absolute"
+        :class="isPortrait 
+          ? 'md:-top-[10.5px] md:-left-[10px] md:w-[800px] lg:w-[800px] 2xl:w-[800px]' 
+          : 'md:-top-[8.5px] md:-left-[5px] md:w-[410px] lg:w-[610px] 2xl:w-[730px]'"
+      >
+        <img 
+        :width="isPortrait ? 260 : 730" 
+        :src="isPortrait ? digiboardImg : tvImg" 
+        />
+      </div>
+
+      <!-- Preview Label -->
+      <p
+        :class="isPortrait 
+          ? 'hidden md:block absolute text-white font-bold text-xl -bottom-[0px] -translate-x-2/4 md:left-[52%]' 
+          : 'hidden md:block absolute text-white font-bold text-xl -bottom-[120px] -translate-x-2/4 md:left-1/2'"
+      >
+        {{ isPortrait ? 'DOOH+ Preview' : 'CTV Preview' }}
+      </p>
+
+      <!-- Fullscreen Button -->
      
-    <div v-if="adview=='phone' " id="celtra-wrapper" class="bg-[#373B43] relative w-9/12 md:scale-[0.7] lg:scale-[0.8]  2xl:scale-[0.9]">
+    </div>
+    
+        
+        
+    </div>
+
+    <div v-else-if="adview=='phone' " id="celtra-wrapper" class="bg-[#373B43] relative w-9/12 md:scale-[0.7] lg:scale-[0.8]  2xl:scale-[0.9]">
         <!-- <p class="text-white">TEST {{ isint }}</p> -->
         <div class="hidden md:block bg-no-repeat bg-[url('../assets/images/cardbg.png')] absolute top-0 
         w-full h-full bg-[length:400px_auto] bg-[position:calc(100%-50px)_calc(100%+50px)]
