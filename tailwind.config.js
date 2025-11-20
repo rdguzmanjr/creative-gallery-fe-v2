@@ -35,6 +35,11 @@ export default {
         'brandgray': '#333841',
         'brandgrayblue':'#131415',
         'brandorange':'#cf4b00',
+        'primary-green': '#22c55e',
+        'brand-yellow': '#f8ffe5',
+        'brand-darkgreen': '#048a81',
+        'brand-green': '#06d6a0',
+        'brand-gray': '#3b4049',
       },
       keyframes: {
         updown: {

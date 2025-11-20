@@ -12,6 +12,6 @@ import FooterBar from '@/components/FooterBar.vue'
          <component :is="Component" />
     </keep-alive>
   </router-view>
-
+  
 </template>
 
