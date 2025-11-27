@@ -15,6 +15,7 @@ const props = defineProps({
 
 <template>
   <!-- PHONE VIEW -->
+   <!-- <div>{{format}}</div> -->
   <div
     v-if="adview === 'phone'"
     id="url-wrapper"
@@ -28,7 +29,8 @@ const props = defineProps({
       lg:w-[900px] lg:h-[570px] lg:bg-[length:700px_auto] lg:bg-[position:calc(100%-150px)_calc(100%)]
       xl:w-[1000px] xl:h-[600px] xl:bg-[length:800px_auto] xl:bg-[position:calc(100%-50px)_calc(100%+100px)]
       2xl:w-[1500px] 2xl:h-[700px] 2xl:bg-[length:900px_auto] 2xl:bg-[position:calc(100%-200px)_calc(100%+50px)]"
-    ></div>
+    >
+    </div>
 
     <!-- Phone content wrapper -->
     <div

@@ -21,12 +21,18 @@
             Helping brands achieve impactful ad performance by creating custom, high-quality audiences at scale.
           </p>
           <div id="heroelem" class="mb-5">
-            <router-link
-              to="/about"
+            <!-- <router-link
+              to="https://nativetouch.com/newsite/about"
               class="inline-block font-myriadvariable font-bold text-brand-green px-8 py-4 text-[0.625rem] md:text-[0.8rem] 2xl:text-lg border-2 border-brand-darkgreen rounded-full bg-transparent hover:bg-brand-darkgreen hover:text-white transition duration-300 ease-in-out"
             >
               LEARN MORE
-            </router-link>
+            </router-link> -->
+            <a
+                href="https://www.nativetouch.com"
+                target="_blank" rel="noopener noreferrer" class="inline-block font-myriadvariable font-bold text-brand-green px-8 py-4 text-[0.625rem] md:text-[0.8rem] 2xl:text-lg border-2 border-brand-darkgreen rounded-full bg-transparent hover:bg-brand-darkgreen hover:text-white transition duration-300 ease-in-out"
+                >
+                LEARN MORE
+              </a>
           </div>
         </div>
         <div>

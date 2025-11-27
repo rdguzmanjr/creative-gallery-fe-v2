@@ -1,7 +1,7 @@
 <script setup>
 import { useSingleCreativeStore } from '@/stores/creative'
 import HTMLWrapperLayout from '@/components/creativepreview/HTMLWrapperLayout.vue'
-import {ref} from 'vue';
+import {ref,computed} from 'vue';
 
 const cteexpanded=ref(false);
 
@@ -20,7 +20,22 @@ window.addEventListener("message", (event) => {
 }, false);
 
 const props=defineProps({srchtml:String,format:String})
-                      //  sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-modals allow-downloads"
+
+const layoutConfig = computed(() => {
+    if (!props.srchtml) return { isFixed: false };
+
+    const match = props.srchtml.match(/(\d+)x(\d+)/);
+
+    if (match) {
+        return {
+            isFixed: true,
+            wi: match[1], 
+            hi: match[2]  
+        };
+    }
+
+    return { isFixed: false };
+});
 
 </script>
 
@@ -35,6 +50,20 @@ const props=defineProps({srchtml:String,format:String})
                         allow="geolocation; camera; microphone; gyroscope; accelerometer; fullscreen"
                     ></iframe>
             </div>
+        </HTMLWrapperLayout>
+    </div>
+     <div v-else-if="format=='Banner'">
+        <HTMLWrapperLayout>
+            <iframe 
+                :src="srchtml"
+                class="m-auto block"
+                :class="{
+                    'w-full h-full': !layoutConfig.isFixed, 
+                    'transition-all duration-300': true
+                }"
+                :style="layoutConfig.isFixed ? { width: layoutConfig.wi + 'px', height: layoutConfig.hi + 'px' } : {}"
+                allow="geolocation; camera; microphone; gyroscope; accelerometer; fullscreen"
+            ></iframe>
         </HTMLWrapperLayout>
     </div>
     <div v-else-if="creativeStore.width==0 && creativeStore.height==0 ">
