@@ -33,6 +33,8 @@ const kpi_open = ref(false)
 const selected_kpis = ref([])
 
 const whatsnew_open = ref(false)
+// Track if 'What's New' is currently selected
+const whatsnew_selected = ref(false)
 
 // -------------------------------
 // Props
@@ -60,7 +62,8 @@ const noneselected = computed(() => {
     !selected_categories.value.length &&
     !selected_advertisers.value.length &&
     !selected_products.value.length &&
-    !selected_kpis.value.length
+    !selected_kpis.value.length &&
+    !whatsnew_selected.value
   )
 })
 
@@ -94,14 +97,22 @@ function namesToIds(names, list) {
 const restoredOnce = ref(false)
 
 function restoreFromURL() {
-  const { categories, advertisers, products, kpis } = route.query
+  const { categories, advertisers, products, kpis, whatsnew } = route.query
 
   if (categories) selected_categories.value = namesToIds(categories, props.categories)
   if (advertisers) selected_advertisers.value = namesToIds(advertisers, props.advertisers)
   if (products) selected_products.value = namesToIds(products, props.products)
   if (kpis) selected_kpis.value = namesToIds(kpis, props.kpis)
 
-  creativeStore.getFilteredCreative(generated_params.value)
+  // Check if whatsnew is present in URL
+  if (whatsnew) {
+    whatsnew_selected.value = true
+    creativeStore.getSearchedWhatsNew()
+  } else {
+    // Only load standard filtered creative if whatsnew is NOT active
+    creativeStore.getFilteredCreative(generated_params.value)
+  }
+  
   restoredOnce.value = true
 }
 
@@ -129,6 +140,17 @@ watch(
     if (ads.length) query.advertisers = idsToNames(ads, props.advertisers).map(slugify).join(',')
     if (prods.length) query.products = idsToNames(prods, props.products).map(slugify).join(',')
     if (kpis.length) query.kpis = idsToNames(kpis, props.kpis).map(slugify).join(',')
+    
+    // Preserve whatsnew state if we are mixing filters, 
+    // or you can choose to remove it here if other filters override it.
+    // Assuming standard behavior where selecting a filter might clear "What's New" mode:
+    if (whatsnew_selected.value) {
+        // If you want "What's New" to persist alongside filters, uncomment below:
+        // query.whatsnew = 'true'
+        
+        // If you want selecting a category to EXIT "What's New" mode (recommended for clarity):
+        whatsnew_selected.value = false 
+    }
 
     router.replace({ query })
     creativeStore.getFilteredCreative(generated_params.value)
@@ -144,7 +166,22 @@ const handlekeypress = e => {
 }
 
 const handler = () => {
-  creativeStore.getSearchedWhatsNew()
+  // Toggle the selection state
+  whatsnew_selected.value = !whatsnew_selected.value
+  
+  const query = { ...route.query }
+
+  if (whatsnew_selected.value) {
+      // Add to URL and fetch
+      query.whatsnew = 'true'
+      creativeStore.getSearchedWhatsNew()
+  } else {
+      // Remove from URL and revert to standard filters
+      delete query.whatsnew
+      creativeStore.getFilteredCreative(generated_params.value)
+  }
+
+  router.replace({ query })
 }
 
 const clearFilter = () => {
@@ -152,6 +189,7 @@ const clearFilter = () => {
   selected_advertisers.value = []
   selected_products.value = []
   selected_kpis.value = []
+  whatsnew_selected.value = false // Reset WhatsNew
 
   category_open.value = false
   advertiser_open.value = false
@@ -218,25 +256,15 @@ const kpis = computed(() => {
         </div>
         <hr class="border-gray-300 mb-3">
        
-        <!-- whatsnew -->
-        <div class="p-2 bg-brandorange mb-3 relative rounded-full flex items-center justify-center" @click="handler">
-            <p class= " text-white font-bold">What's new?</p>
-            <!-- <fa-icon :icon="['fas', 'list']" class="transition-transform ease-out duration-[500ms] backdrop:relative text-brandgreen text-xl absolute top-2 left-3"/>
-            <fa-icon :icon="['fas', 'chevron-down']" class="transition-transform ease-out duration-[500ms] backdrop:relative text-brandgreen text-xl absolute top-2 right-3" 
-            :class="whatsnew_open?'-rotate-180':'rotate-0'"/> -->
+        <div 
+          class="p-2 mb-3 relative rounded-full flex items-center justify-center cursor-pointer border border-transparent" 
+          :class="whatsnew_selected ? 'bg-brandgreen text-black' : 'bg-brandorange text-white hover:border-white'"
+          @click="handler"
+        >
+            <p class="font-bold">What's new?</p>
        </div>
-       <!-- <div class="space-y-3 mb-3" :class="whatsnew_open?'block':'hidden'">
-            <input v-model="whatsnew_search" type="search" id="default-search" class="block w-full p-1 ps-5 text-md text-white bg-black border focus:border-brandgreen focus:ring-brandgreen rounded-md outline-none"  
-            placeholder="Search New Products" required />
-            <p class="text-white text-md" v-if="whatsnews.length==0">No new products to show</p>
-            <div class="flex items-center" v-for="whatsnew in whatsnews" :key="whatsnew">
-                <input :id="`whatsnew-link-${whatsnew.name}`" v-model="selected_products" type="checkbox" :value="`${whatsnew.id}`" class="w-4 h-4 text-brandgreen bg-gray-100 border-gray-300 rounded-lg focus:ring-brandgreen focus:ring-2 accent-brandgreen outline-none">
-                <label :for="`whatsnew-link-${whatsnew.name}`" class="ms-2 text-md">{{whatsnew.name}}</label>
-            </div>
-        </div> -->
 
-       <!-- category -->
-        <div class="p-2 bg-gray-800 mb-3 relative" @click.prevent="category_open=!category_open">
+       <div class="p-2 bg-gray-800 mb-3 relative" @click.prevent="category_open=!category_open">
             <p class="ps-9">Categories</p>
             <fa-icon :icon="['fas', 'list']" class="transition-transform ease-out duration-[500ms] backdrop:relative text-brandgreen text-xl absolute top-2 left-3"/>
             <fa-icon :icon="['fas', 'chevron-down']" class="transition-transform ease-out duration-[500ms] backdrop:relative text-brandgreen text-xl absolute top-2 right-3" 
@@ -253,7 +281,6 @@ const kpis = computed(() => {
         </div>
 
 
-        <!-- advertiser -->
         <div class="p-2 bg-gray-800 mb-3 relative" @click.prevent="advertiser_open=!advertiser_open">
             <p class="ps-9">Advertisers</p>
             <fa-icon :icon="['fas', 'list']" class="transition-transform ease-out duration-[500ms] backdrop:relative text-brandgreen text-xl absolute top-2 left-3"/>
@@ -270,7 +297,6 @@ const kpis = computed(() => {
             </div>
         </div>
 
-        <!-- products -->
         <div class="p-2 bg-gray-800 mb-3 relative" @click.prevent="product_open=!product_open">
             <p class="ps-9">Products</p>
             <fa-icon :icon="['fas', 'list']" class="transition-transform ease-out duration-[500ms] backdrop:relative text-brandgreen text-xl absolute top-2 left-3"/>
@@ -287,7 +313,6 @@ const kpis = computed(() => {
             </div>
         </div>
 
-        <!-- kpis -->
         <div class="p-2 bg-gray-800 mb-3 relative" @click.prevent="kpi_open=!kpi_open">
             <p class="ps-9">KPIs</p>
             <fa-icon :icon="['fas', 'list']" class="transition-transform ease-out duration-[500ms] backdrop:relative text-brandgreen text-xl absolute top-2 left-3"/>
