@@ -1,6 +1,6 @@
 <script setup>
 // Importing required modules
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import HTMLWrapper from '@/components/creativepreview/HTMLWrapper.vue'
 
 // Reactive state for determining current device view (phone, desktop, or tablet)
@@ -9,15 +9,73 @@ const adview = ref('phone')
 // Props passed from the parent component
 const props = defineProps({
   srcurl: String,
-  format: String
+  format: String,
+  tags: Array
 })
+
+const formatRegex = /^\d+x\d+$/
+
+
+const sizeTag = computed(() => {
+  const found = props.tags.find(tag => formatRegex.test(tag.name))
+  return found ? found.name : null
+})
+
+
+const dimensions = computed(() => {
+  if (!sizeTag.value) return { width: 0, height: 0 }
+
+  const [width, height] = sizeTag.value.split('x')
+
+  return {
+    width: parseInt(width, 10),
+    height: parseInt(height, 10)
+  }
+})
+
+console.log(dimensions.value)
+
 </script>
 
 <template>
+  <!-- NO Device View -->
+   <div
+    v-if="sizeTag"
+    id="url-wrapper"
+    class="bg-[#373B43] relative w-9/12 md:scale-[0.7] lg:scale-[0.8] 2xl:scale-[0.9]"
+  >
+    <!-- Decorative card background (desktop only) -->
+    <div
+      class="hidden md:block bg-no-repeat bg-[url('../assets/images/cardbg.png')] absolute top-0 
+      w-full h-full bg-[length:400px_auto] bg-[position:calc(100%-50px)_calc(100%+50px)]
+      md:w-[500px] md:h-[570px] md:bg-[length:500px_auto] 
+      lg:w-[900px] lg:h-[570px] lg:bg-[length:700px_auto] lg:bg-[position:calc(100%-150px)_calc(100%)]
+      xl:w-[1000px] xl:h-[600px] xl:bg-[length:800px_auto] xl:bg-[position:calc(100%-50px)_calc(100%+100px)]
+      2xl:w-[1500px] 2xl:h-[700px] 2xl:bg-[length:900px_auto] 2xl:bg-[position:calc(100%-200px)_calc(100%+50px)]"
+    >
+    </div>
+
+    <!-- Phone content wrapper -->
+   <div
+      id="phone-wrapper"
+      class="md:h-auto block md:absolute md:-translate-y-2/4 md:top-[50%] md:-translate-x-2/4 md:left-[30%] lg:left-[50%] 2xl:left-[60%]"
+      :style="{ aspectRatio: dimensions.width + '/' + dimensions.height }"
+    >
+      <HTMLWrapper
+        :srchtml="srcurl"
+        :format="format"
+        class="w-screen h-screen pointer-events-auto overflow-hidden"
+        :style="{ 
+          maxWidth: dimensions.width + 'px', 
+          maxHeight: dimensions.height + 'px' 
+        }"
+      />
+    </div>
+  </div>
   <!-- PHONE VIEW -->
    <!-- <div>{{format}}</div> -->
   <div
-    v-if="adview === 'phone'"
+    v-else-if="adview === 'phone'"
     id="url-wrapper"
     class="bg-[#373B43] relative w-9/12 md:scale-[0.7] lg:scale-[0.8] 2xl:scale-[0.9]"
   >

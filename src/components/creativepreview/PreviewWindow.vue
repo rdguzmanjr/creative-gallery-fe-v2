@@ -14,5 +14,5 @@ const props=defineProps({creative:Object})
 <template>
     <CeltraWrapper v-if="creative.srctype == 'celtra'" :srcurl="creative.srcurl" :format="creative.format" />
     <VideoWrapper v-else-if="creative.srctype == 'video'" :srcurl="creative.srcurl" :format="creative.format" />
-    <URLWrapper v-else-if="creative.srctype == 'url'" :srcurl="creative.srcurl" :format="creative.format" />
+    <URLWrapper v-else-if="creative.srctype == 'url'" :srcurl="creative.srcurl" :format="creative.format" :tags="creative.whatsnew" />
 </template>
