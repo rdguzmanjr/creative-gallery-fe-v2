@@ -123,10 +123,10 @@ watch(() => props.srcurl, () => {
           ? 'md:-top-[10.5px] md:-left-[10px] md:w-[800px] lg:w-[800px] 2xl:w-[800px]' 
           : 'md:-top-[8.5px] md:-left-[5px] md:w-[410px] lg:w-[610px] 2xl:w-[730px]'"
       >
-        <img 
-        :width="isPortrait ? 260 : 730" 
-        :src="isPortrait ? digiboardImg : tvImg" 
-        />
+       <img
+        :width="isPortrait ? 260 : 730"
+        :src="format === 'DOOH+' ? '' : (isPortrait ? digiboardImg : tvImg)"
+      />
       </div>
 
       <!-- Mute Prompt -->
@@ -146,7 +146,10 @@ watch(() => props.srcurl, () => {
           ? 'hidden md:block absolute text-white font-bold text-xl -bottom-[0px] -translate-x-2/4 md:left-[52%]' 
           : 'hidden md:block absolute text-white font-bold text-xl -bottom-[120px] -translate-x-2/4 md:left-1/2'"
       >
-        {{ isPortrait ? 'DOOH+ Preview' : 'CTV Preview' }}
+        {{ isPortrait 
+          ? 'DOOH+ Preview' 
+          : (format === 'DOOH+' ? '' : 'CTV Preview') 
+        }}
       </p>
 
       <!-- Fullscreen Button -->
