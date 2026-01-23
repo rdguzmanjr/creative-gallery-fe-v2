@@ -125,7 +125,7 @@ watch(() => props.srcurl, () => {
       >
        <img
         :width="isPortrait ? 260 : 730"
-        :src="format === 'DOOH+' ? '' : (isPortrait ? digiboardImg : tvImg)"
+        :src="isPortrait ? digiboardImg : (format === 'DOOH+' ? '' : tvImg)"
       />
       </div>
 
