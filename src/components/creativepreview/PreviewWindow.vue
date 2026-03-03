@@ -14,7 +14,7 @@ const props=defineProps({creative:Object})
 <template>
     <CeltraWrapper v-if="creative.srctype == 'celtra'" :srcurl="creative.srcurl" :format="creative.format" />
 <VideoWrapper
-  v-else-if="creative.srctype === 'video' || creative.format === 'DOOH+'"
+  v-else-if="creative.srctype === 'video' || creative.format === 'DOOH+' || creative.format === 'CTV Shoppable'"
   :srcurl="creative.srcurl"
   :format="creative.format"
 />    
