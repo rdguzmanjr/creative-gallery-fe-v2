@@ -16,7 +16,7 @@ const props=defineProps({srcurl:String,format:String})
 
 <template>
      <!-- <p class="text-white">TEST {{ format }}</p> -->
-     <div v-if="format=='CTV Floating Hero' || format === 'CTV Storyline' " id="celtra-wrapper" class="bg-[#373B43] relative w-12/12 md:w-9/12">
+     <div v-if="format=='CTV Floating Hero' || format === 'CTV Storyline' || format === 'CTV Sports Ticker'" id="celtra-wrapper" class="bg-[#373B43] relative w-12/12 md:w-9/12">
        
         <div class="hidden md:block bg-no-repeat bg-[url('../assets/images/cardbg.png')] absolute top-0 
         w-full h-full bg-[length:400px_auto] bg-[position:calc(100%-50px)_calc(100%+50px)]
